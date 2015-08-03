@@ -1,4 +1,5 @@
-package example;
+package com.happy.service;
+import com.happy.service.utility.EncryptionUtility;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import java.io.IOException;
@@ -10,16 +11,17 @@ import javax.ws.rs.Path;
 /**
  * Created by Jorge Olvera on 03/08/2015.
  */
-// The Java class will be hosted at the URI path "/helloworld"
-@Path("/helloworld")
-public class HelloWorld {
+// The Java class will be hosted at the URI path "/encryption"
+@Path("/encryption")
+public class Encryption {
     // The Java method will process HTTP GET requests
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
     @Produces("text/plain")
-    public String getClichedMessage() {
+    public String getEncryption() {
         // Return some cliched textual content
-        return "Hello World";
+        EncryptionUtility.encryption("Sridhar");
+        return EncryptionUtility.encryption("Sridhar");
     }
 
     public static void main(String[] args) throws IOException {
@@ -27,7 +29,7 @@ public class HelloWorld {
         server.start();
 
         System.out.println("Server running");
-        System.out.println("Visit: http://localhost:9998/helloworld");
+        System.out.println("Visit: http://localhost:9998/encryption");
         System.out.println("Hit return to stop...");
         System.in.read();
         System.out.println("Stopping server");

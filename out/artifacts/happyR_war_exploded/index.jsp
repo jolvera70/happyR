@@ -47,8 +47,6 @@
                 <input type="submit" name="enviar" value="enviar">
             </td>
         </tr>
-        <tr>
-            </td>aqui
             <%
                 String string = "";
                 try {
@@ -62,14 +60,11 @@
                         string += line + "\n";
                     }
                     %>
-            <%=string%>
             <%
                     br.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }%>
-            </td>
-        </tr>
     </table>
 </form>
 
@@ -77,15 +72,14 @@
 <script>
     var eventsList = <%=string%>;
     $(document).ready(function() {
-        var obj = jQuery.parseJSON( '{ "name": "John" }' );
-        alert( obj.name );
         var table = $('<table/>').appendTo($('#somediv'));
         $(eventsList).each(function(i, event) {
-            alert(event.event.get(0));
-            var obj2 = jQuery.parseJSON( event.event.get(0) );
-            alert(obj2.type);
+            $(event.event).each(function(i, datos) {
             $('<tr/>').appendTo(table)
-                    .append($('<td/>').text(obj2.type))
+                    .append($('<td/>').text(datos.type))
+                    .append($('<td/>').text(datos.comment))
+                    .append($('<td/>').text(datos.image))
+            });
         });
     });
 </script>

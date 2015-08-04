@@ -29,7 +29,7 @@ public class EventManager {
     @Path("/add")
     @Produces("text/plain")
     public String addEvent(@Context UriInfo info) {
-        final EventHappy eventHappy = new EventHappy.Builder(info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).build();
+        final EventHappy eventHappy = new EventHappy.Builder(info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image(info.getQueryParameters().getFirst("image")).build();
         return EventUtility.add(info.getQueryParameters().getFirst("name"), eventHappy);
     }
 

@@ -19,14 +19,14 @@ public class EventManager {
     @Path("/add")
     @Produces("text/plain")
     public String addEvent(@Context UriInfo info) {
-        return EventUtility.add(info.getQueryParameters().getFirst("name"));
+        return EventUtility.add(info.getQueryParameters().getFirst("type"),info.getQueryParameters().getFirst("name"));
     }
 
     @GET
     @Path("/delete")
     @Produces("text/plain")
     public String deleteEvent(@Context UriInfo info) {
-        return EventUtility.delete(info.getQueryParameters().getFirst("name"));
+        return EventUtility.delete(info.getQueryParameters().getFirst("type"),info.getQueryParameters().getFirst("name"));
     }
 
     @GET

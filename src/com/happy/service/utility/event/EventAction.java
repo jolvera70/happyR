@@ -8,14 +8,16 @@ import java.util.Map;
  */
 public final class EventAction {
 
+    private final String type;
     private final String name;
 
-    private EventAction(final String name) {
+    private EventAction(final String type,final String name) {
+        this.type = type;
         this.name = name;
     }
 
-    public static EventAction createNewInstance(String name){
-        return new EventAction(name);
+    public static EventAction createNewInstance(final String type,final String name){
+        return new EventAction(type,name);
     }
 
     private static final Map<String, String> map = new HashMap<String, String>();

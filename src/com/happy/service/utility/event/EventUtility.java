@@ -1,7 +1,5 @@
 package com.happy.service.utility.event;
 
-import com.happy.service.utility.ListNameCache;
-
 /**
  * Created by jolvera on 15/07/2015.
  */
@@ -9,17 +7,17 @@ public final class EventUtility {
 
     private EventUtility(){}
 
-    public static final void add(final String name){
+    public static final String add(final String name){
         EventAction eventAction = EventAction.createNewInstance(name);
-        eventAction.addEvent();
+        return eventAction.addEvent();
     }
 
-    public static final void delete(final String name){
+    public static final String delete(final String name){
         EventAction eventAction = EventAction.createNewInstance(name);
-        eventAction.deleteEvent();
+        return eventAction.deleteEvent();
     }
 
-    public static final void showAllEvents(){
-        EventAction.showAllEvents();
+    public static final String showAllEvents(){
+        return EventAction.showAllEvents();
     }
 }

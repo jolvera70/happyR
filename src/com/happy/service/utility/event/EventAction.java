@@ -20,8 +20,8 @@ public final class EventAction {
 
     private static final Map<String, String> map = new HashMap<String, String>();
 
-    protected static void showAllEvents() {
-        System.out.println(map);
+    protected static String showAllEvents() {
+        return map.toString();
     }
 
     protected String addEvent() {
@@ -40,26 +40,30 @@ public final class EventAction {
         return map.get(name);
     }
 
-    protected void deleteEvent() {
+    protected String deleteEvent() {
         try {
-            System.out.println("decrypting: " + name);
             decryptionValidate(name);
-            final String name = encryptingDecrypting(false);
-            if (map.containsValue(name)) {
-                System.out.println(name + " found in cache");
+            if (map.containsKey(name)) {
+                deleteNameToCache(name);
             } else {
-                addNameToCache(name, name);
+                System.out.println(name + " NOT found in cache");
+
             }
             System.out.println("result= " + name);
             System.out.println();
         } catch (Exception e) {
             System.out.println("Error " + e);
-
         }
+        return name;
     }
     private static void addNameToCache(final String name, final String encryptName) {
         System.out.println("adding to cache");
         map.put(name, encryptName);
+    }
+
+    private static void deleteNameToCache(final String name) {
+        System.out.println("deleting in cache "+name);
+        map.remove(name);
     }
 
     private static void decryptionValidate(final String decryptName) {

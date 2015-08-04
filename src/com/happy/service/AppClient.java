@@ -1,5 +1,6 @@
 package com.happy.service;
 
+import org.codehaus.jettison.json.JSONObject;
 import org.omg.CORBA.NameValuePair;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -17,19 +18,24 @@ import java.util.List;
 public class AppClient {
     public static void main(String[] argv) throws IOException {
 
-        String urlParameters = "name=Luis&type=f&comment=tristeL";
-        URL url = new URL("http://localhost:9998/event/add");
-        URLConnection conn = url.openConnection();
+        String string = "";
+        try {
 
-        conn.setDoOutput(true);
+            // Step1: Let's 1st read file from fileSystem
+            // Change CrunchifyJSON.txt path here
+            URL oracle = new URL("http://localhost:9998/event/view/client");
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(oracle.openStream()));
 
-        OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
-
-        writer.write(urlParameters);
-        writer.flush();
-
-
-        writer.close();
+            String line;
+            while ((line = br.readLine()) != null) {
+                string += line + "\n";
+            }
+            System.out.println(string);
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

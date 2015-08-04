@@ -43,7 +43,7 @@ public class EventManager {
 
     @GET
     @Path("/view/client")
-    @Produces("text/plain")
+    @Produces("application/json")
     public String viewEvents(@Context UriInfo info) {
         List<EventHappy> eventHappyList = EventUtility.showAllEventsByName(info.getQueryParameters().getFirst("name"));
         if(eventHappyList==null) {return emptyResponse();}
@@ -83,6 +83,7 @@ public class EventManager {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        return mainObj.toString();
+        //return ja.toString();
+        return "{\"error\":\"no exist events\"}";
     }
 }

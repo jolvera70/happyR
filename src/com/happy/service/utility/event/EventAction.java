@@ -1,6 +1,10 @@
 package com.happy.service.utility.event;
 
+import com.happy.manager.event.bean.EventHappy;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,38 +12,35 @@ import java.util.Map;
  */
 public final class EventAction {
 
-    private final String type;
+    private final EventHappy eventHappy;
     private final String name;
 
-    private EventAction(final String type,final String name) {
-        this.type = type;
+    private EventAction(final String name, final EventHappy eventHappy) {
+        this.eventHappy = eventHappy;
         this.name = name;
     }
 
-    public static EventAction createNewInstance(final String type,final String name){
-        return new EventAction(type,name);
+    public static EventAction createNewInstance(final String name, final EventHappy eventHappy) {
+        return new EventAction(name, eventHappy);
     }
 
-    private static final Map<String, String> map = new HashMap<String, String>();
+    private static final Map<String, List<EventHappy>> map = new HashMap<String, List<EventHappy>>();
 
-    protected static String showAllEvents() {
-        return map.toString();
+    protected static Map<String, List<EventHappy>> showAllEvents() {
+        return map;
+    }
+
+    protected static List<EventHappy> showAllEventsByName(final String name) {
+        return map.get(name);
     }
 
     protected String addEvent() {
         try {
-            System.out.println("encrypting: " + name);
-            encryptionValidate(name);
-            if (map.containsKey(name)) {
-                System.out.println(name + " found in cache");
-            } else {
-                final String encryptName = encryptingDecrypting(true);
-                addNameToCache(name, encryptName);
-            }
+            addNameToCache(name, eventHappy);
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
-        return map.get(name);
+        return map.get(name) + "- Agregado";
     }
 
     protected String deleteEvent() {
@@ -47,68 +48,26 @@ public final class EventAction {
             if (map.containsKey(name)) {
                 deleteNameToCache(name);
             } else {
-                System.out.println(name + " NOT found in cache");
+                return name + " NOT found in cache";
             }
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
-        return name;
+        return name + " - Eliminado";
     }
-    private static void addNameToCache(final String name, final String encryptName) {
-        map.put(name, encryptName);
+
+    private static void addNameToCache(final String name, final EventHappy eventHappy) {
+        List<EventHappy> events;
+        if (map.get(name) != null) {
+            events = map.get(name);
+        } else {
+            events = new ArrayList<EventHappy>();
+        }
+        events.add(eventHappy);
+        map.put(name, events);
     }
 
     private static void deleteNameToCache(final String name) {
         map.remove(name);
-    }
-
-    private static void decryptionValidate(final String decryptName) {
-        if (decryptName.length() % 2 > 0) {
-            throw new IllegalArgumentException("Invalid encrypted value, the length must be a par number :" + decryptName);
-        }
-        if (decryptName.replaceFirst("#", "").indexOf("#") != -1) {
-            throw new IllegalArgumentException("Invalid encrypted value,is not valid send more than one character '#':" + decryptName);
-        }
-        if (decryptName.indexOf(" ") != -1) {
-            throw new IllegalArgumentException("Invalid encrypted value,is not valid send ' ' space character:" + decryptName);
-        }
-    }
-
-
-    private static void encryptionValidate(final String name) {
-        if (name.indexOf("#") != -1) {
-            throw new IllegalArgumentException("Invalid decrypted value, invalid character '#':" + name);
-        }
-        if (name.indexOf(" ") != -1) {
-            throw new IllegalArgumentException("Invalid decrypted value,invalid space character ' ':" + name);
-        }
-    }
-
-    /**
-     *
-     * @param encrypting: true in order to encrypt the value, or false de decrypt the value.
-     * @return String with the value encrypt or decrypt, depends of encrypting param value
-     */
-    private String encryptingDecrypting(final boolean encrypting) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        try {
-            if (name.length() % 2 > 0) {
-                stringBuilder.append(name.substring((name.length() / 2) + 1));
-                if (encrypting) {
-                    stringBuilder.append("#");
-                }
-                stringBuilder.append(name.substring(0, (name.length() / 2) + 1));
-            } else {
-                stringBuilder.append(name.substring(name.length() / 2));
-                stringBuilder.append(name.substring(0, name.length() / 2));
-            }
-        } catch (Exception e) {
-            System.out.println("Error in encryptingDecrypting " + name + ":" + e);
-        }
-        if (encrypting) {
-            return String.valueOf(stringBuilder);
-        } else {
-            return String.valueOf(stringBuilder).replace("#", "");
-        }
     }
 }

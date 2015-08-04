@@ -42,27 +42,21 @@ public final class EventAction {
 
     protected String deleteEvent() {
         try {
-            decryptionValidate(name);
             if (map.containsKey(name)) {
                 deleteNameToCache(name);
             } else {
                 System.out.println(name + " NOT found in cache");
-
             }
-            System.out.println("result= " + name);
-            System.out.println();
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
         return name;
     }
     private static void addNameToCache(final String name, final String encryptName) {
-        System.out.println("adding to cache");
         map.put(name, encryptName);
     }
 
     private static void deleteNameToCache(final String name) {
-        System.out.println("deleting in cache "+name);
         map.remove(name);
     }
 

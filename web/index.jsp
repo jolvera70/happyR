@@ -47,39 +47,44 @@
                 <input type="submit" name="enviar" value="enviar">
             </td>
         </tr>
-            <%
-                String string = "";
-                try {
+        <%
+            String string = "";
+            try {
 
-                    URL oracle = new URL("http://localhost:9998/event/view/client?name=Luis");
-                    BufferedReader br = new BufferedReader(
-                            new InputStreamReader(oracle.openStream()));
+                URL oracle = new URL("http://localhost:9998/event/view/client?name=Luis");
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader(oracle.openStream()));
 
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        string += line + "\n";
-                    }
-                    %>
-            <%
-                    br.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }%>
+                String line;
+                while ((line = br.readLine()) != null) {
+                    string += line + "\n";
+                }
+        %>
+        <%
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }%>
     </table>
 </form>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
     var eventsList = <%=string%>;
-    $(document).ready(function() {
+    $(document).ready(function () {
         var table = $('<table/>').appendTo($('#somediv'));
-        $(eventsList).each(function(i, event) {
-            $(event.event).each(function(i, datos) {
-            $('<tr/>').appendTo(table)
-                    .append($('<td/>').text(datos.type))
-                    .append($('<td/>').text(datos.comment))
-                    .append($('<td/>').text(datos.image))
+        $(eventsList).each(function (i, event) {
+            $(event.event).each(function (i, datos) {
+                $('<tr/>').appendTo(table)
+                        .append($('<td/>').text(datos.type))
+                        .append($('<td/>').text(datos.comment))
+                        .append($('<td/><img/>').attr("src", "data:image/png;base64," + datos.image))
             });
+        });
+        var table = $('<table/>').appendTo($('#somediv'));
+        $(eventsList).each(function (i, event) {
+            $('<tr/>').appendTo(table)
+                    .append($('<td/>').text(event.error))
         });
     });
 </script>

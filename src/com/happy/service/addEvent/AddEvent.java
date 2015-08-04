@@ -1,27 +1,28 @@
-package com.happy.service;
+package com.happy.service.addEvent;
+
 import com.happy.service.utility.EncryptionUtility;
-import com.sun.net.httpserver.HttpServer;
+import com.happy.service.utility.event.EventUtility;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
-import java.io.IOException;
+import com.sun.net.httpserver.HttpServer;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import java.io.IOException;
 
 /**
  * Created by Jorge Olvera on 03/08/2015.
  */
 // The Java class will be hosted at the URI path "/encryption"
 @Path("/encryption")
-public class Encryption {
+public class AddEvent {
     // The Java method will process HTTP GET requests
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
     @Produces("text/plain")
-    public String getEncryption() {
+    public void getEncryption() {
         // Return some cliched textual content
-        EncryptionUtility.encryption("Sridhar");
-        return EncryptionUtility.encryption("Sridhar");
+        EventUtility.add("Sridhar");
     }
 
     public static void main(String[] args) throws IOException {

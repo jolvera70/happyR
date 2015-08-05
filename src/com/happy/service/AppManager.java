@@ -8,7 +8,7 @@ import java.io.IOException;
  */
 public class AppManager {
     public static void main(String[] args) throws IOException {
-        HttpServer server = HttpServerFactory.create("http://localhost:9998/");
+        final HttpServer server = HttpServerFactory.create("http://localhost:9998/");
         server.start();
 
         System.out.println("Server running");

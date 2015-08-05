@@ -13,17 +13,17 @@ public final class EventUtility {
     private EventUtility(){}
 
     public static final String add(final String name,final EventHappy eventHappy){
-        EventAction eventAction = EventAction.createNewInstance(name,eventHappy);
+        final EventAction eventAction = EventAction.createNewInstance(name,eventHappy);
         return eventAction.addEvent();
     }
 
     public static final String delete(final String name,final EventHappy eventHappy){
-        EventAction eventAction = EventAction.createNewInstance(name,eventHappy);
+        final EventAction eventAction = EventAction.createNewInstance(name,eventHappy);
         return eventAction.deleteEvent();
     }
 
-    public static final Map<String, List<EventHappy>> showAllEvents(){
-        return EventAction.showAllEvents();
+    public static final Map<String, List<EventHappy>> showAllClients(){
+        return EventAction.showAllClients();
     }
 
     public static final List<EventHappy> showAllEventsByName(final String name){

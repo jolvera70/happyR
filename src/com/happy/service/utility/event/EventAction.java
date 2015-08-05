@@ -26,7 +26,7 @@ public final class EventAction {
 
     private static final Map<String, List<EventHappy>> map = new HashMap<String, List<EventHappy>>();
 
-    protected static Map<String, List<EventHappy>> showAllEvents() {
+    protected static Map<String, List<EventHappy>> showAllClients() {
         return map;
     }
 
@@ -46,7 +46,7 @@ public final class EventAction {
     protected String deleteEvent() {
         try {
             if (map.containsKey(name)) {
-                deleteNameToCache(name);
+                deleteNameToCache(name,eventHappy);
             } else {
                 return name + " NOT found in cache";
             }
@@ -57,7 +57,7 @@ public final class EventAction {
     }
 
     private static void addNameToCache(final String name, final EventHappy eventHappy) {
-        List<EventHappy> events;
+        final List<EventHappy> events;
         if (map.get(name) != null) {
             events = map.get(name);
         } else {
@@ -67,7 +67,13 @@ public final class EventAction {
         map.put(name, events);
     }
 
-    private static void deleteNameToCache(final String name) {
-        map.remove(name);
+    private static void deleteNameToCache(final String name,final EventHappy eventHappy) {
+       final List<EventHappy> eventsList = map.get(name);
+        for(final EventHappy eventHappyResponse: eventsList){
+            if(eventHappyResponse.getId_e()== eventHappy.getId_e()){
+                eventsList.remove(eventHappyResponse);
+                map.put(name, eventsList);
+            }
+        }
     }
 }

@@ -20,6 +20,12 @@
     <table>
         <tr>
             <td>
+                id
+            </td>
+            <td><input name="id" type="text" value=""></td>
+        </tr>
+        <tr>
+            <td>
                 name
             </td>
             <td><input name="name" type="text" value=""></td>
@@ -72,17 +78,14 @@
 <script>
     var eventsList = <%=string%>;
     $(document).ready(function () {
-        var table = $('<table/>').appendTo($('#somediv')).attr('border', '1');;
-        var $wrap = $('<div/>').attr('id', 'container');
-
+        var table = $('<table/>').appendTo($('#somediv')).attr('border', '1');
         $(eventsList).each(function (i, event) {
             $(event.event).each(function (i, element) {
                 $('<tr/>').appendTo(table)
-                $('#container').prepend('<img src="data:image/png;base64,' + element.image_e + '"/>')
-                $('<td/>').text(element.type_e).appendTo(table)
-                $('<td/>').text(element.comment_e).appendTo(table)
-                $('<td/>').appendTo(table)
-                        .append($wrap);
+                        .append($('<td/>').text(element.id_e))
+                        .append($('<td/>').text(element.type_e))
+                        .append($('<td/>').text(element.comment_e))
+                        .append($('<td/>').prepend('<img src="data:image/png;base64,' + element.image_e + '"/>'));
             });
         });
         var table = $('<table/>').appendTo($('#somediv'));

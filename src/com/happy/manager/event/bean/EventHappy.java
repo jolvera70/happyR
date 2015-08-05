@@ -5,9 +5,14 @@ package com.happy.manager.event.bean;
  */
 public class EventHappy {
 
+    private final int id_e;
     private final String type_e;
     private final String comment_e;
     private final String image_e;
+
+    public final int getId_e() {
+        return id_e;
+    }
 
     public final String getType_e() {
         return type_e;
@@ -23,13 +28,15 @@ public class EventHappy {
 
     public static class Builder {
         // Required parameters
+        private final int  id_e;
         private final String type_e;
         private final String comment_e;
 
         // Optional parameters - initialized to default values
         private String image_e = "empty";
 
-        public Builder(final String type_e, final String comment_e) {
+        public Builder(final int id_e,final String type_e, final String comment_e) {
+            this.id_e = id_e;
             this.type_e = type_e;
             this.comment_e = comment_e;
         }
@@ -44,6 +51,7 @@ public class EventHappy {
         }
     }
     private EventHappy(final Builder builder) {
+        id_e = builder.id_e;
         type_e = builder.type_e;
         comment_e = builder.comment_e;
         image_e = builder.image_e;

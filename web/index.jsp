@@ -72,13 +72,17 @@
 <script>
     var eventsList = <%=string%>;
     $(document).ready(function () {
-        var table = $('<table/>').appendTo($('#somediv'));
+        var table = $('<table/>').appendTo($('#somediv')).attr('border', '1');;
+        var $wrap = $('<div/>').attr('id', 'container');
+
         $(eventsList).each(function (i, event) {
-            $(event.event).each(function (i, datos) {
+            $(event.event).each(function (i, element) {
                 $('<tr/>').appendTo(table)
-                        .append($('<td/>').text(datos.type))
-                        .append($('<td/>').text(datos.comment))
-                        .append($('<td/><img/>').attr("src", "data:image/png;base64," + datos.image))
+                $('#container').prepend('<img src="data:image/png;base64,' + element.image_e + '"/>')
+                $('<td/>').text(element.type_e).appendTo(table)
+                $('<td/>').text(element.comment_e).appendTo(table)
+                $('<td/>').appendTo(table)
+                        .append($wrap);
             });
         });
         var table = $('<table/>').appendTo($('#somediv'));

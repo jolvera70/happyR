@@ -5,37 +5,37 @@ package com.happy.manager.event.bean;
  */
 public class EventHappy {
 
-    private final String type;
-    private final String comment;
-    private final String image;
+    private final String type_e;
+    private final String comment_e;
+    private final String image_e;
 
-    public final String getType() {
-        return type;
+    public final String getType_e() {
+        return type_e;
     }
 
-    public final String getComment() {
-        return comment;
+    public final String getComment_e() {
+        return comment_e;
     }
 
-    public final String getImage() {
-        return image;
+    public final String getImage_e() {
+        return image_e;
     }
 
     public static class Builder {
         // Required parameters
-        private final String type;
-        private final String comment;
+        private final String type_e;
+        private final String comment_e;
 
         // Optional parameters - initialized to default values
-        private String image = "empty";
+        private String image_e = "empty";
 
-        public Builder(final String type, final String comment) {
-            this.type = type;
-            this.comment = comment;
+        public Builder(final String type_e, final String comment_e) {
+            this.type_e = type_e;
+            this.comment_e = comment_e;
         }
 
-        public Builder image(final String val) {
-            image = val;
+        public Builder image_e(final String val) {
+            image_e = val;
             return this;
         }
 
@@ -44,8 +44,8 @@ public class EventHappy {
         }
     }
     private EventHappy(final Builder builder) {
-        type = builder.type;
-        comment = builder.comment;
-        image = builder.image;
+        type_e = builder.type_e;
+        comment_e = builder.comment_e;
+        image_e = builder.image_e;
     }
 }

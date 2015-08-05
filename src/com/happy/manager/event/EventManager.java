@@ -29,7 +29,7 @@ public class EventManager {
     @Path("/add")
     @Produces("text/plain")
     public String addEvent(@Context UriInfo info) {
-        final EventHappy eventHappy = new EventHappy.Builder(info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image(info.getQueryParameters().getFirst("image")).build();
+        final EventHappy eventHappy = new EventHappy.Builder(info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image_e(info.getQueryParameters().getFirst("image")).build();
         return EventUtility.add(info.getQueryParameters().getFirst("name"), eventHappy);
     }
 
@@ -52,9 +52,9 @@ public class EventManager {
         for (EventHappy eventHappy : eventHappyList) {
             JSONObject myObject = new JSONObject();
             try {
-                myObject.put("type", eventHappy.getType());
-                myObject.put("comment", eventHappy.getComment());
-                myObject.put("image", eventHappy.getImage());
+                myObject.put("type_e", eventHappy.getType_e());
+                myObject.put("comment_e", eventHappy.getComment_e());
+                myObject.put("image_e", eventHappy.getImage_e());
             } catch (Exception ex) {
                 System.out.println("--> Error ..." + ex);
             }

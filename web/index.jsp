@@ -66,7 +66,7 @@
                 while ((line = br.readLine()) != null) {
                     clients += line + "\n";
                 }
-                if (line.indexOf("error") != -1) {
+                if (clients.indexOf("error") == -1) {
                     existClients = true;
                 }
         %>
@@ -88,8 +88,7 @@
                 while ((line = br.readLine()) != null) {
                     events += line + "\n";
                 }
-                System.out.println(line.indexOf("error"));
-                if (line.indexOf("error") != -1) {
+                if (events.indexOf("error") == -1) {
                     existEvents = true;
                 }
         %>

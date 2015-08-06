@@ -68,7 +68,7 @@
                 $(clientes.client).each(function (i, element) {
                     $('<tr/>').appendTo(tableClients)
                             .append($('<td/>').text(element.name))
-                            .append($('<td/>').prepend('<a href="/detailClient.jsp?name=' + element.name + '">detalle</a href>'))
+                            .append($('<td/>').prepend('<a href="/detailClient.jsp?name=' + element.name +'">detalle</a href>'))
                             .append($('<td/>').prepend('<a href="http://localhost:9998/happy/client/delete?name=' + element.name + '&id=' + element.id_e + '">borrar</a href>'));
 
                 });

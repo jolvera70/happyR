@@ -90,6 +90,7 @@
                   .append($('<td/>').text(element.type_e))
                   .append($('<td/>').text(element.comment_e))
                   .append($('<td/>').prepend('<img src="data:image/png;base64,' + element.image_e + '"/>'))
+                  .append($('<td/>').prepend('<a href="/detailEvent.jsp?name=<%=request.getParameter("name")%>&id=' + element.id_e + '">editar</a href>'))
                   .append($('<td/>').prepend('<a href="http://localhost:9998/happy/event/delete?name=<%=request.getParameter("name")%>&id=' + element.id_e + '">borrar</a href>'));
         });
       });

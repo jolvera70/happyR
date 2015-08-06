@@ -24,4 +24,13 @@ public final class EventManager {
     public static final List<EventHappy> showAllEventsByName(final String name){
         return HappyManager.showAllEventsByName(name);
     }
+
+    public static final EventHappy showEventByNameAndId(final String name,final int id){
+        return HappyManager.showEventByNameAndId(name,id);
+    }
+
+    public static final String update(final String name,final EventHappy eventHappy){
+        final HappyManager happyManager = HappyManager.createNewInstance(name, eventHappy);
+        return happyManager.updateEvent();
+    }
 }

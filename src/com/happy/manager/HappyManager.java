@@ -34,6 +34,16 @@ public final class HappyManager {
         return map.get(name);
     }
 
+    protected static EventHappy showEventByNameAndId(final String name, final int id) {
+        final List<EventHappy> eventHappyList = map.get(name);
+        for (final EventHappy eventHappyResponse : eventHappyList) {
+            if(eventHappyResponse.getId_e()==id){
+                return eventHappyResponse;
+            }
+        }
+        return null;
+    }
+
     protected String addEvent() {
         try {
             addEventToCache(name, eventHappy);
@@ -45,7 +55,7 @@ public final class HappyManager {
 
     protected String addClient() {
         try {
-            addClientToCache(name, eventHappy);
+            addClientToCache(name);
         } catch (Exception e) {
             System.out.println("Error " + e);
         }
@@ -65,10 +75,23 @@ public final class HappyManager {
         return name + " - Eliminado";
     }
 
+    protected String updateEvent() {
+        try {
+            if (map.containsKey(name)) {
+                updateEventToCache(name, eventHappy);
+            } else {
+                return name + " NOT found in cache";
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+        return name + " - Eliminado";
+    }
+
     protected String deleteClient() {
         try {
             if (map.containsKey(name)) {
-                deleteClientToCache(name, eventHappy);
+                deleteClientToCache(name);
             } else {
                 return name + " NOT found in cache";
             }
@@ -89,7 +112,7 @@ public final class HappyManager {
         map.put(name, events);
     }
 
-    private static void addClientToCache(final String name, final EventHappy eventHappy) {
+    private static void addClientToCache(final String name) {
         map.put(name, null);
     }
 
@@ -103,7 +126,18 @@ public final class HappyManager {
         }
     }
 
-    private static void deleteClientToCache(final String name, final EventHappy eventHappy) {
+    private static void updateEventToCache(final String name, final EventHappy eventHappy) {
+        final List<EventHappy> eventsList = map.get(name);
+        for (final EventHappy eventHappyResponse : eventsList) {
+            if (eventHappyResponse.getId_e() == eventHappy.getId_e()) {
+                eventsList.remove(eventHappyResponse);
+                eventsList.add(eventHappy);
+                map.put(name, eventsList);
+            }
+        }
+    }
+
+    private static void deleteClientToCache(final String name) {
         map.remove(name);
     }
 }

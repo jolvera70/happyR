@@ -27,14 +27,14 @@ public class EventService {
     public String addEvent(final @Context UriInfo info) {
         final EventHappy eventHappy;
         try {
-            if(info.getQueryParameters().getFirst("name").trim().length()<=0){
+            if (info.getQueryParameters().getFirst("name").trim().length() <= 0) {
                 return UtilityManager.returnError("El nombre no puede ser vacio");
-            }else if(info.getQueryParameters().getFirst("type").trim().length()<=0){
+            } else if (info.getQueryParameters().getFirst("type").trim().length() <= 0) {
                 return UtilityManager.returnError("El tiipo no puede ser vacio");
             }
-        eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")),info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image_e(info.getQueryParameters().getFirst("image")).build();
-        }catch (Exception e){
-            System.out.println("Error al inicializar el evento para agregar: "+e);
+            eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")), info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image_e(info.getQueryParameters().getFirst("image")).build();
+        } catch (Exception e) {
+            System.out.println("Error al inicializar el evento para agregar: " + e);
             return UtilityManager.returnError("Error al inicializar el evento para agregar");
         }
         return EventManager.add(info.getQueryParameters().getFirst("name"), eventHappy);
@@ -47,8 +47,8 @@ public class EventService {
         final EventHappy eventHappy;
         try {
             eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")), info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).build();
-        }catch (Exception e){
-            System.out.println("Error al inicializar el evento para borrar: "+e);
+        } catch (Exception e) {
+            System.out.println("Error al inicializar el evento para borrar: " + e);
             return UtilityManager.returnError("Error al inicializar el evento para borrar");
         }
         return EventManager.delete(info.getQueryParameters().getFirst("name"), eventHappy);
@@ -57,9 +57,11 @@ public class EventService {
     @GET
     @Path("/view")
     @Produces("application/json")
-    public String viewEvents(final @Context UriInfo info) {
+    public String viewEventsByClientName(final @Context UriInfo info) {
         final List<EventHappy> eventHappyList = EventManager.showAllEventsByName(info.getQueryParameters().getFirst("name"));
-        if(eventHappyList==null) {return eventEmptyResponse();}
+        if (eventHappyList == null) {
+            return eventEmptyResponse();
+        }
         final JSONArray ja = new JSONArray();
         final JSONObject mainObj = new JSONObject();
         for (final EventHappy eventHappy : eventHappyList) {
@@ -82,21 +84,65 @@ public class EventService {
         return mainObj.toString();
     }
 
-    private String eventEmptyResponse() {
-        final JSONArray ja = new JSONArray();
-        final JSONObject mainObj = new JSONObject();
-        final JSONObject myObject = new JSONObject();
-            try {
-                myObject.put("error", "no exist events");
-            } catch (Exception ex) {
-                System.out.println("--> Error ..." + ex);
+    @GET
+    @Path("/view/detail")
+    @Produces("application/json")
+    public String viewEventByClientNameAndId(final @Context UriInfo info) {
+        try {
+            final EventHappy eventHappy = EventManager.showEventByNameAndId(info.getQueryParameters().getFirst("name"), Integer.parseInt(info.getQueryParameters().getFirst("id")));
+            if (eventHappy == null) {
+                return eventEmptyResponse();
             }
+            final JSONArray ja = new JSONArray();
+            final JSONObject mainObj = new JSONObject();
+            final JSONObject myObject = new JSONObject();
+            myObject.put("id_e", eventHappy.getId_e());
+            myObject.put("type_e", eventHappy.getType_e());
+            myObject.put("comment_e", eventHappy.getComment_e());
+            myObject.put("image_e", eventHappy.getImage_e());
+
             ja.put(myObject);
             try {
                 mainObj.put("event", ja);
             } catch (JSONException e) {
-                e.printStackTrace();
+                return UtilityManager.returnError("Error en JSON");
             }
+            return mainObj.toString();
+        } catch (Exception ex) {
+            System.out.println("--> Error ..." + ex);
+            return UtilityManager.returnError("--> Error ...");
+        }
+    }
+
+    @GET
+    @Path("/update")
+    @Produces("text/plain")
+    public String updateEvent(final @Context UriInfo info) {
+        final EventHappy eventHappy;
+        try {
+            eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")), info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image_e(info.getQueryParameters().getFirst("image")).build();
+        } catch (Exception e) {
+            System.out.println("Error al inicializar el evento para actualizar: " + e);
+            return UtilityManager.returnError("Error al inicializar el evento para actualizar");
+        }
+        return EventManager.update(info.getQueryParameters().getFirst("name"), eventHappy);
+    }
+
+    private String eventEmptyResponse() {
+        final JSONArray ja = new JSONArray();
+        final JSONObject mainObj = new JSONObject();
+        final JSONObject myObject = new JSONObject();
+        try {
+            myObject.put("error", "no exist events");
+        } catch (Exception ex) {
+            System.out.println("--> Error ..." + ex);
+        }
+        ja.put(myObject);
+        try {
+            mainObj.put("event", ja);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return mainObj.toString();
     }
 

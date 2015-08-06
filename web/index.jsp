@@ -19,34 +19,13 @@
 <form action="http://localhost:9998/event/add">
     <table>
         <tr>
-            <td>
-                id
-            </td>
-            <td><input name="id" type="text" value=""></td>
+            <td><input name="id" type="hidden" value="0"></td>
         </tr>
         <tr>
             <td>
                 name
             </td>
             <td><input name="name" type="text" value=""></td>
-        </tr>
-        <tr>
-            <td>
-                type
-            </td>
-            <td><input name="type" type="text" value=""></td>
-        </tr>
-        <tr>
-            <td>
-                comment
-            </td>
-            <td><input name="comment" type="text" value=""></td>
-        </tr>
-        <tr>
-            <td>
-                image
-            </td>
-            <td><input name="image" type="text" value=""></td>
         </tr>
         <tr>
             <td>
@@ -75,59 +54,10 @@
             } catch (Exception e) {
                 e.printStackTrace();
             }%>
-        <%
-            String events = "";
-            boolean existEvents = false;
-            try {
-
-                URL oracle = new URL("http://localhost:9998/event/view/client?name=Luis");
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(oracle.openStream()));
-
-                String line;
-                while ((line = br.readLine()) != null) {
-                    events += line + "\n";
-                }
-                if (events.indexOf("error") == -1) {
-                    existEvents = true;
-                }
-        %>
-        <%
-                br.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }%>
     </table>
 </form>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-    var eventsList = <%=events%>;
-    var existEvents = <%=existEvents%>;
-    $(document).ready(function () {
-        if (existEvents) {
-            var table = $('<table/>').appendTo($('#eventsdiv')).attr('border', '1');
-            $(eventsList).each(function (i, event) {
-                $(event.event).each(function (i, element) {
-                    $('<tr/>').appendTo(table)
-                            .append($('<td/>').text(element.id_e))
-                            .append($('<td/>').text(element.type_e))
-                            .append($('<td/>').text(element.comment_e))
-                            .append($('<td/>').prepend('<img src="data:image/png;base64,' + element.image_e + '"/>'))
-                            .append($('<td/>').prepend('<a href="http://localhost:9998/event/delete?name=Luis&id=' + element.id_e + '">borrar</a href>'));
-                });
-            });
-        }
-        var table = $('<table/>').appendTo($('#eventsdiv'));
-        $(eventsList).each(function (i, event) {
-            $(event.event).each(function (i, element) {
-                $('<tr/>').appendTo(table)
-                        .append($('<td/>').text(element.error))
-            });
-        });
-    });
-</script>
-
 <script>
     var clientsList = <%=clients%>;
     var existClients = <%=existClients%>;
@@ -138,7 +68,7 @@
                 $(clientes.client).each(function (i, element) {
                     $('<tr/>').appendTo(tableClients)
                             .append($('<td/>').text(element.name))
-                            .append($('<td/>').prepend('<a href="http://localhost:9998/event/view/client?name=' + element.name + '">detalle</a href>'));
+                            .append($('<td/>').prepend('<a href="/detailClient.jsp?name=' + element.name + '">detalle</a href>'));
                 });
             });
         }
@@ -153,6 +83,5 @@
 </script>
 </head>
 <div id="clientsdiv"></div>
-<div id="eventsdiv"></div>
 </body>
 </html>

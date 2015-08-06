@@ -1,6 +1,7 @@
 package com.happy.manager.event;
 
 import com.happy.manager.event.bean.EventHappy;
+import com.happy.service.utility.UtilityManager;
 import com.happy.service.utility.event.EventUtility;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -25,7 +26,18 @@ public class EventManager {
     @Path("/add")
     @Produces("text/plain")
     public String addEvent(final @Context UriInfo info) {
-        final EventHappy eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")),info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image_e(info.getQueryParameters().getFirst("image")).build();
+        final EventHappy eventHappy;
+        try {
+            if(info.getQueryParameters().getFirst("name").trim().length()<=0){
+                return UtilityManager.returnError("El nombre no puede ser vacio");
+            }else if(info.getQueryParameters().getFirst("type").trim().length()<=0){
+                return UtilityManager.returnError("El tiipo no puede ser vacio");
+            }
+        eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")),info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).image_e(info.getQueryParameters().getFirst("image")).build();
+        }catch (Exception e){
+            System.out.println("Error al inicializar el evento para agregar: "+e);
+            return UtilityManager.returnError("Error al inicializar el evento para agregar");
+        }
         return EventUtility.add(info.getQueryParameters().getFirst("name"), eventHappy);
     }
 
@@ -38,7 +50,7 @@ public class EventManager {
             eventHappy = new EventHappy.Builder(Integer.parseInt(info.getQueryParameters().getFirst("id")), info.getQueryParameters().getFirst("type"), info.getQueryParameters().getFirst("comment")).build();
         }catch (Exception e){
             System.out.println("Error al inicializar el evento para borrar: "+e);
-            return returnError("Error al inicializar el evento para borrar");
+            return UtilityManager.returnError("Error al inicializar el evento para borrar");
         }
         return EventUtility.delete(info.getQueryParameters().getFirst("name"), eventHappy);
     }
@@ -132,7 +144,5 @@ public class EventManager {
         return mainObj.toString();
     }
 
-    private String returnError(final String error) {
-        return "{\"error\":\""+error+"\"}";
-    }
+
 }

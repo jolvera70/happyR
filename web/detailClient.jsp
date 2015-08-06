@@ -14,7 +14,7 @@
     <title></title>
 </head>
 <body>
-<form action="http://localhost:9998/happy/event/add">
+<form action="http://localhost:9998/happy/event/add" name="addEvent">
   <table>
     <tr>
       <td>
@@ -44,7 +44,8 @@
       <td>
         image
       </td>
-      <td><input name="image" type="text" value=""></td>
+      <td><%=request.getParameter("imageName")%>
+        <input name="image" type="hidden" value="<%=request.getParameter("image")%>" readonly></td>
     </tr>
     <tr>
       <td>
@@ -74,6 +75,12 @@
         e.printStackTrace();
       }%>
   </table>
+</form>
+
+<form method="post" name="loadImage" id="loadImage" action="UploadServlet?name=<%=request.getParameter("name")%>" enctype="multipart/form-data">
+  Select file to upload:
+  <input type="file" name="dataFile" id="fileChooser"/><br/><br/>
+  <input type="submit" value="Upload" />
 </form>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>

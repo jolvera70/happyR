@@ -1,4 +1,4 @@
-package com.happy.manager.event.bean;
+package com.happy.bean;
 
 /**
  * Created by Jorge Olvera on 04/08/2015.

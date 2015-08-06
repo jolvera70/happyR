@@ -16,7 +16,7 @@
 
 
 <body>
-<form action="http://localhost:9998/event/add">
+<form action="http://localhost:9998/happy/client/add">
     <table>
         <tr>
             <td><input name="id" type="hidden" value="0"></td>
@@ -37,7 +37,7 @@
             boolean existClients = false;
             try {
 
-                URL oracle = new URL("http://localhost:9998/event/view/clients");
+                URL oracle = new URL("http://localhost:9998/happy/client/view");
                 BufferedReader br = new BufferedReader(
                         new InputStreamReader(oracle.openStream()));
 
@@ -68,7 +68,9 @@
                 $(clientes.client).each(function (i, element) {
                     $('<tr/>').appendTo(tableClients)
                             .append($('<td/>').text(element.name))
-                            .append($('<td/>').prepend('<a href="/detailClient.jsp?name=' + element.name + '">detalle</a href>'));
+                            .append($('<td/>').prepend('<a href="/detailClient.jsp?name=' + element.name + '">detalle</a href>'))
+                            .append($('<td/>').prepend('<a href="http://localhost:9998/happy/client/delete?name=' + element.name + '&id=' + element.id_e + '">borrar</a href>'));
+
                 });
             });
         }

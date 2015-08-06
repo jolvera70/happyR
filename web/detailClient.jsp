@@ -14,7 +14,7 @@
     <title></title>
 </head>
 <body>
-<form action="http://localhost:9998/event/add">
+<form action="http://localhost:9998/happy/event/add">
   <table>
     <tr>
       <td>
@@ -56,7 +56,7 @@
       boolean existEvents = false;
       try {
 
-        URL oracle = new URL("http://localhost:9998/event/view/client?name="+request.getParameter("name"));
+        URL oracle = new URL("http://localhost:9998/happy/event/view?name="+request.getParameter("name"));
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 
@@ -90,7 +90,7 @@
                   .append($('<td/>').text(element.type_e))
                   .append($('<td/>').text(element.comment_e))
                   .append($('<td/>').prepend('<img src="data:image/png;base64,' + element.image_e + '"/>'))
-                  .append($('<td/>').prepend('<a href="http://localhost:9998/event/delete?name=<%=request.getParameter("name")%>&id=' + element.id_e + '">borrar</a href>'));
+                  .append($('<td/>').prepend('<a href="http://localhost:9998/happy/event/delete?name=<%=request.getParameter("name")%>&id=' + element.id_e + '">borrar</a href>'));
         });
       });
     }

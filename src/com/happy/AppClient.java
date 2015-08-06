@@ -1,4 +1,4 @@
-package com.happy.service;
+package com.happy;
 
 import java.io.*;
 import java.net.URL;
@@ -13,7 +13,7 @@ public class AppClient {
 
             // Step1: Let's 1st read file from fileSystem
             // Change CrunchifyJSON.txt path here
-            final URL oracle = new URL("http://localhost:9998/event/view/client");
+            final URL oracle = new URL("http://localhost:9998/happy/client/view");
             final BufferedReader br = new BufferedReader(
                     new InputStreamReader(oracle.openStream()));
 

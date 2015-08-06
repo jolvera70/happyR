@@ -1,8 +1,8 @@
-package com.happy.manager.event;
+package com.happy.service.event;
 
-import com.happy.manager.event.bean.EventHappy;
-import com.happy.service.utility.UtilityManager;
-import com.happy.service.utility.event.EventUtility;
+import com.happy.bean.EventHappy;
+import com.happy.manager.utility.UtilityManager;
+import com.happy.manager.EventManager;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -13,14 +13,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jorge Olvera on 03/08/2015.
  */
 // The Java class will be hosted at the URI path "/event"
-@Path("/event")
-public class EventManager {
+@Path("/happy/event")
+public class EventService {
 
     @GET
     @Path("/add")
@@ -38,7 +37,7 @@ public class EventManager {
             System.out.println("Error al inicializar el evento para agregar: "+e);
             return UtilityManager.returnError("Error al inicializar el evento para agregar");
         }
-        return EventUtility.add(info.getQueryParameters().getFirst("name"), eventHappy);
+        return EventManager.add(info.getQueryParameters().getFirst("name"), eventHappy);
     }
 
     @GET
@@ -52,14 +51,14 @@ public class EventManager {
             System.out.println("Error al inicializar el evento para borrar: "+e);
             return UtilityManager.returnError("Error al inicializar el evento para borrar");
         }
-        return EventUtility.delete(info.getQueryParameters().getFirst("name"), eventHappy);
+        return EventManager.delete(info.getQueryParameters().getFirst("name"), eventHappy);
     }
 
     @GET
-    @Path("/view/client")
+    @Path("/view")
     @Produces("application/json")
     public String viewEvents(final @Context UriInfo info) {
-        final List<EventHappy> eventHappyList = EventUtility.showAllEventsByName(info.getQueryParameters().getFirst("name"));
+        final List<EventHappy> eventHappyList = EventManager.showAllEventsByName(info.getQueryParameters().getFirst("name"));
         if(eventHappyList==null) {return eventEmptyResponse();}
         final JSONArray ja = new JSONArray();
         final JSONObject mainObj = new JSONObject();
@@ -83,31 +82,6 @@ public class EventManager {
         return mainObj.toString();
     }
 
-    @GET
-    @Path("/view/clients")
-    @Produces("application/json")
-    public String viewAllClients(final @Context UriInfo info) {
-        final Map<String, List<EventHappy>> clientsList = EventUtility.showAllClients();
-        if(clientsList.size()<=0) {return clientEmptyResponse();}
-        final JSONArray ja = new JSONArray();
-        final JSONObject mainObj = new JSONObject();
-        for (final Map.Entry<String, List<EventHappy>> eventHappy : clientsList.entrySet()) {
-            final JSONObject myObject = new JSONObject();
-            try {
-                myObject.put("name", eventHappy.getKey());
-            } catch (Exception ex) {
-                System.out.println("--> Error ..." + ex);
-            }
-            ja.put(myObject);
-            try {
-                mainObj.put("client", ja);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return mainObj.toString();
-    }
-
     private String eventEmptyResponse() {
         final JSONArray ja = new JSONArray();
         final JSONObject mainObj = new JSONObject();
@@ -123,24 +97,6 @@ public class EventManager {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        return mainObj.toString();
-    }
-
-    private String clientEmptyResponse() {
-        final JSONArray ja = new JSONArray();
-        final JSONObject mainObj = new JSONObject();
-        final JSONObject myObject = new JSONObject();
-        try {
-            myObject.put("error", "no exist client");
-        } catch (Exception ex) {
-            System.out.println("--> Error ..." + ex);
-        }
-        ja.put(myObject);
-        try {
-            mainObj.put("client", ja);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return mainObj.toString();
     }
 

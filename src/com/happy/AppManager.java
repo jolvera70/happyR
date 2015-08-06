@@ -1,4 +1,4 @@
-package com.happy.service;
+package com.happy;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.jersey.api.container.httpserver.HttpServerFactory;
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class AppManager {
         server.start();
 
         System.out.println("Server running");
-        System.out.println("Visit: http://localhost:9998/event");
+        System.out.println("Visit: http://localhost:9998/happy");
         System.out.println("Hit return to stop...");
         System.in.read();
         System.out.println("Stopping server");

@@ -44,8 +44,9 @@
       <td>
         image
       </td>
-      <td><%=request.getParameter("imageName")%>
-        <input name="image" type="hidden" value="<%=request.getParameter("image")%>" readonly></td>
+      <td>
+        <input name="imageName" type="text" value="<%=request.getParameter("imageName")%>" readonly></td>
+      <input name="image" type="hidden" value="" readonly></td>
     </tr>
     <tr>
       <td>

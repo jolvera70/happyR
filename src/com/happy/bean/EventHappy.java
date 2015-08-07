@@ -9,6 +9,7 @@ public class EventHappy {
     private final String type_e;
     private final String comment_e;
     private final String image_e;
+    private final String imageName_e;
 
     public final int getId_e() {
         return id_e;
@@ -26,6 +27,10 @@ public class EventHappy {
         return image_e;
     }
 
+    public final String getImageName_e() {
+        return imageName_e;
+    }
+
     public static class Builder {
         // Required parameters
         private final int  id_e;
@@ -34,6 +39,7 @@ public class EventHappy {
 
         // Optional parameters - initialized to default values
         private String image_e = "empty";
+        private String imageName_e = "";
 
         public Builder(final int id_e,final String type_e, final String comment_e) {
             this.id_e = id_e;
@@ -46,6 +52,11 @@ public class EventHappy {
             return this;
         }
 
+        public Builder imageName_e(final String val) {
+            imageName_e = val;
+            return this;
+        }
+
         public EventHappy build() {
             return new EventHappy(this);
         }
@@ -55,5 +66,6 @@ public class EventHappy {
         type_e = builder.type_e;
         comment_e = builder.comment_e;
         image_e = builder.image_e;
+        imageName_e = builder.imageName_e;
     }
 }

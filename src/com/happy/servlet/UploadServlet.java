@@ -63,7 +63,6 @@ public class UploadServlet extends HttpServlet {
             List items = upload.parseRequest(request);
             Iterator iter = items.iterator();
             String imgName = "";
-            String imgstr = "";
             while (iter.hasNext()) {
                 FileItem item = (FileItem) iter.next();
 
@@ -71,18 +70,15 @@ public class UploadServlet extends HttpServlet {
                     String fileName = new File(item.getName()).getName();
                     String filePath = uploadFolder + File.separator + fileName;
                     File uploadedFile = new File(filePath);
-                    System.out.println(filePath);
+                    //System.out.println(filePath);
                     // saves the file to upload directory
                     item.write(uploadedFile);
-
-                    BufferedImage img = ImageIO.read(new File(filePath));
-                    imgName = fileName;
-                    imgstr = ImageUtils.encodeToString(img, "png");
+                    imgName = filePath;
                 }
             }
 
             // displays done.jsp page after upload finished
-            getServletContext().getRequestDispatcher("/detailClient.jsp?name=" + request.getParameter("name") + "&image=" + imgstr + "&imageName="+imgName).forward(
+            getServletContext().getRequestDispatcher("/detailClient.jsp?name=" + request.getParameter("name") + "&imageName="+imgName).forward(
                     request, response);
 
         } catch (FileUploadException ex) {

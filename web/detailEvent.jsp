@@ -61,8 +61,11 @@
                             .append($('<td/>').text('comment'))
                             .append($('<td/>').prepend('<input type="text" name="comment" value="' + element.comment_e + '">'));
                     $('<tr/>').appendTo(table)
+                            .append($('<td/>').text(''))
+                            .append($('<td/>').prepend('<input type="hidden" name="image" value="' + element.image_e + '">'));
+                    $('<tr/>').appendTo(table)
                             .append($('<td/>').text('image'))
-                            .append($('<td/>').prepend('<input type="text" name="image" value="' + element.image_e + '">'));
+                            .append($('<td/>').prepend('<input type="text" name="imageName" value="' + element.imageName_e + '">'));
                     $('<tr/>').appendTo(table)
                             .append($('<td/>').prepend('<input type="submit" name="enviar" value="enviar">'));
                 });
